@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>IoT CoAP</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div padding text-center>
+    <h1 ion-text color="primary">
+      Welcome
+    </h1>
+    <p>
+      IoT CoAP is a simple CoAP client App.
+      <br>
+      First add a new CoAP Endpoint.
+    </p>
+  </div>
+  <ion-fab right bottom>
+    <button ion-fab (click)="onClickCreateEndpoint()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
+</ion-content>

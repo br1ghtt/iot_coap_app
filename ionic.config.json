@@ -1,0 +1,8 @@
+{
+  "name": "IoT CoAP",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "74b79786"
+}

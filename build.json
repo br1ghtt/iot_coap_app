@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "/home/iron/keystores/iot_coap_keys.jks",
+      "storePassword": "",
+      "alias": "google_iot_coap_upload_key",
+      "password": "",
+      "keystoreType": "jks"
+    }
+  }
+}

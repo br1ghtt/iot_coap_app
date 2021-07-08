@@ -1,0 +1,10 @@
+page-coap-endpoint-list {
+  ion-img {
+      -webkit-filter: grayscale(90%) opacity(20%); /* Safari 6.0 - 9.0 */
+      filter: grayscale(90%) opacity(20%);
+      margin: auto;
+  }
+  h2 {
+    color: map_get($colors, primary);
+  }
+}

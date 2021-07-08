@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>CoAP Response</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="response">
+    <ion-item-divider>
+      Coap Payload
+    </ion-item-divider>
+
+    <ion-item *ngIf="response.options && response.options.content_format_value !== 50" text-wrap>
+      {{response.payload}}
+    </ion-item>
+    <ion-item *ngIf="response.options && response.options.content_format_value == 50" class="json-text">
+      <div class="json-text">{{JSON.stringify(JSON.parse(response.payload), null, 2)}}</div>
+    </ion-item>
+    <ion-item text-wrap>
+      Size
+      <p item-end>{{response.payload_size}} Bytes</p>
+    </ion-item>
+
+    <ion-item-divider (click)="toggleDetails()">
+      Coap Header
+      <ion-icon item-end color="primary" name="arrow-dropdown"></ion-icon>
+    </ion-item-divider>
+    <div *ngIf="showDetails">
+      <ion-item text-wrap>
+        Acknowledged
+        <p item-end>{{response.acknowledged}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Canceled
+        <p item-end>{{response.canceled}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Code
+        <p item-end>{{response.code}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Dublicate
+        <p item-end>{{response.dublicate}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        MID
+        <p item-end>{{response.mid}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Rejected
+        <p item-end>{{response.rejected}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        RTT
+        <p item-end>{{response.rtt}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Timed Out
+        <p item-end>{{response.timedOut}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Timestamp
+        <p item-end>{{response.timestamp}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Token
+        <p item-end>{{response.token}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Type
+        <p item-end>({{response.type_value}}) {{response.type}}</p>
+      </ion-item>
+      <ion-item-divider>
+        Coap Header Options
+      </ion-item-divider>
+      <ion-item *ngFor="let if_m of response.options.if_match" text-wrap>
+        1. If-Match
+        <p>{{if_m}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        3. Uri-Host
+        <p item-end>{{response.options.uri_host}}</p>
+      </ion-item>
+      <ion-item *ngFor="let et of response.options.etag" text-wrap>
+        4. Etag
+        <p item-end>{{et}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        5. If-None-Match
+        <p item-end>{{response.options.if_none_match}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        7. Uri-Port
+        <p item-end>{{response.options.uri_port}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        8. Location-Path
+        <p item-end>{{response.options.location_path}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        11. Uri-Path
+        <p item-end>{{response.options.uri_path}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        12. Content-Format
+        <p item-end>({{response.options.content_format_value}}) {{response.options.content_format}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        14. Max-Age
+        <p item-end>{{response.options.max_age}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        15. Uri-Query
+        <p item-end>{{response.options.uri_query}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        17. Accept
+        <p item-end>({{response.options.accept_value}}) {{response.options.accept}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        20. Location-Query
+        <p item-end>{{response.options.location_query}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        35. Proxy-Uri
+        <p item-end>{{response.options.proxy_uri}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        39. Proxy-Scheme
+        <p item-end>{{response.options.proxy_scheme}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        60. Size1
+        <p item-end>{{response.options.size1}}</p>
+      </ion-item>
+      <ion-item-divider>
+        Layer 3
+      </ion-item-divider>
+      <ion-item text-wrap>
+        Source Address
+        <p item-end>{{response.layer3.source_address}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Source Port
+        <p item-end>{{response.layer3.source_port}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Destination Address
+        <p item-end>{{response.layer3.destination_address}}</p>
+      </ion-item>
+      <ion-item text-wrap>
+        Source Port
+        <p item-end>{{response.layer3.destination_port}}</p>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>
+
