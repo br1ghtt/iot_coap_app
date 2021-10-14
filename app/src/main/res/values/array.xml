@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="coap_request_methods_array">
+        <item>Discover</item>
+        <item>Ping</item>
+        <item>Get</item>
+        <item>Post</item>
+        <item>Put</item>
+        <item>Delete</item>
+    </string-array>
+</resources>

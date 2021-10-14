@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/coapServerFragment">
+
+    <fragment
+        android:id="@+id/coapRequestFragment"
+        android:name="ch.buedev.iot_coap.CoapRequestFragment"
+        android:label="fragment_coap_request"
+        tools:layout="@layout/fragment_coap_request" >
+        <argument
+            android:name="hostname"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/coapServerFragment"
+        android:name="ch.buedev.iot_coap.CoapServerFragment"
+        android:label="fragment_coap_server"
+        tools:layout="@layout/fragment_coap_server" >
+        <action
+            android:id="@+id/action_coapServerFragment_to_coapRequestFragment"
+            app:destination="@id/coapRequestFragment" />
+    </fragment>
+</navigation>
