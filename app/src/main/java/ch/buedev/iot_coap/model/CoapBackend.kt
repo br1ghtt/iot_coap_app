@@ -1,8 +1,7 @@
 package ch.buedev.iot_coap.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CoapBackend(
