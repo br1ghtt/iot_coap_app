@@ -1,9 +1,4 @@
 <resources>
-    <string name="app_name">IoT CoAP App</string>
-    <string name="hint_hostname">Hostname</string>
-    <string name="default_coap_uri">coap://coap.me:5683</string>
-    <string name="hint_coap_request_path">Path</string>
-    <string name="hint_coap_request_query">Query</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">IoT CoAP</string>
+    <string name="route_coap_backend_list_page">routecoapbackendlistpage</string>
 </resources>
