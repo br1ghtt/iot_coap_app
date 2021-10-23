@@ -10,5 +10,11 @@ enum class CoapProtocol(@SerializedName("value") val value: String) {
     @SerializedName("2")
     HTTP("http"),
     @SerializedName("3")
-    HTTP_SECURE("https")
+    HTTP_SECURE("https");
+
+    companion object {
+        private val mapping = values().associateBy(CoapProtocol::value)
+        fun fromSymbol(value: String) = mapping[value]
+        fun asValueList() = values().map { it.value }
+    }
 }

@@ -42,7 +42,7 @@ fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) 
                 )
             },
             secondaryText = {
-                Text(text = "172.31.20.20")
+                Text(text = "TODO.172.31.20.20")
             },
             trailing = {
                 Icon(

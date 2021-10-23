@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class CoapBackend(
     var name: String = "Coap Backend Name",
     var protocol: CoapProtocol = CoapProtocol.COAP,
-    var hostname: String = "coap-me",
+    var hostname: String = "coap.me",
     var port: Int = 5683
 ) : Parcelable {
 
@@ -16,6 +16,8 @@ data class CoapBackend(
         return protocol.value + "://" + hostname + ":" + port
     }
 
-
+    fun setProtocolByValue(value: String) {
+        protocol = CoapProtocol.fromSymbol(value)!!
+    }
 
 }

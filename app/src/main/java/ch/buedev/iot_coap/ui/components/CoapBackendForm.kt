@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,9 +23,11 @@ fun CoapBackendForm(coapBackend: CoapBackend) {
     var name by rememberSaveable { mutableStateOf(coapBackend.name) }
     var hostname by rememberSaveable { mutableStateOf(coapBackend.hostname) }
     var port by rememberSaveable { mutableStateOf(coapBackend.port.toString()) }
-    val protocols = listOf(CoapProtocol.COAP.value, coapBackend.protocol.value)
-    var protocolsExpanded by remember { mutableStateOf(false) }
-    var selectedProtocol by rememberSaveable { mutableStateOf(protocols[0]) }
+
+    val protocols = CoapProtocol.asValueList()
+
+    var selectedProtocol by rememberSaveable { mutableStateOf(coapBackend.protocol.value) }
+    var protocolsExpanded by rememberSaveable { mutableStateOf(false) }
     Surface {
         Column(Modifier.padding(16.dp)) {
             OutlinedTextField(
@@ -46,8 +51,6 @@ fun CoapBackendForm(coapBackend: CoapBackend) {
                     value = selectedProtocol,
                     onValueChange = {
                         selectedProtocol = it
-                        coapBackend.protocol = CoapProtocol.valueOf(selectedProtocol)
-
                     },
                     label = { Text("Protocol") },
                     trailingIcon = {
@@ -66,6 +69,7 @@ fun CoapBackendForm(coapBackend: CoapBackend) {
                         DropdownMenuItem(
                             onClick = {
                                 selectedProtocol = selectionOption
+                                coapBackend.setProtocolByValue(selectedProtocol)
                                 protocolsExpanded = false
                             }
                         ) {
