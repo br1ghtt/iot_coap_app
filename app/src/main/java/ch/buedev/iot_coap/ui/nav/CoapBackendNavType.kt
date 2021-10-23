@@ -3,6 +3,7 @@ package ch.buedev.iot_coap.ui.nav
 import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavType
+import ch.buedev.iot_coap.TAG
 import ch.buedev.iot_coap.model.CoapBackend
 import com.google.gson.Gson
 
@@ -12,7 +13,6 @@ class CoapBackendNavType : NavType<CoapBackend>(isNullableAllowed = false) {
     }
 
     override fun parseValue(value: String): CoapBackend {
-        Log.d("ABC", value)
         return Gson().fromJson(value, CoapBackend::class.java)
     }
 
