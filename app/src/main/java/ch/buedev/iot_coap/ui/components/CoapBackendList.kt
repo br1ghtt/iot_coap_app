@@ -7,16 +7,21 @@ import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
 
 @ExperimentalMaterialApi
 @Composable
-fun CoapBackendList(coapBackends: List<CoapBackend>) {
+fun CoapBackendList(coapBackends: List<CoapBackend>, navController: NavController) {
     LazyColumn {
         items(coapBackends) { coapBackend ->
-            CoapBackendListItem(coapBackend)
+            CoapBackendListItem(
+                coapBackend = coapBackend,
+                navController = navController
+            )
             Divider()
         }
     }
@@ -31,7 +36,11 @@ fun CoapBackendList(coapBackends: List<CoapBackend>) {
 )
 @Composable
 fun PreviewCoapBackendList() {
+    val navController = rememberNavController()
     IoTCoAPTheme {
-        CoapBackendList(coapBackends = CoapBackendDatasource.loadCoapServerData())
+        CoapBackendList(
+            coapBackends = CoapBackendDatasource.loadCoapBackends(),
+            navController = navController
+        )
     }
 }

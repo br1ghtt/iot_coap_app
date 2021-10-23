@@ -10,16 +10,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.model.CoapProtocol
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
 
 @ExperimentalMaterialApi
 @Composable
-fun CoapBackendForm() {
-    var name by rememberSaveable { mutableStateOf("Coap Backend Name") }
-    var hostname by rememberSaveable { mutableStateOf("coap.me") }
-    var port by rememberSaveable { mutableStateOf("5862") }
-    val protocols = listOf(CoapProtocol.COAP.value, CoapProtocol.HTTP.value)
+fun CoapBackendForm(coapBackend: CoapBackend) {
+    var name by rememberSaveable { mutableStateOf(coapBackend.name) }
+    var hostname by rememberSaveable { mutableStateOf(coapBackend.hostname) }
+    var port by rememberSaveable { mutableStateOf(coapBackend.port.toString()) }
+    val protocols = listOf(CoapProtocol.COAP.value, coapBackend.protocol.value)
     var protocolsExpanded by remember { mutableStateOf(false) }
     var selectedProtocol by rememberSaveable { mutableStateOf(protocols[0]) }
     Surface {
@@ -28,6 +29,7 @@ fun CoapBackendForm() {
                 value = name,
                 onValueChange = {
                     name = it
+                    coapBackend.name = name
                 },
                 label = { Text(text = "Backend Name") },
                 singleLine = true,
@@ -42,7 +44,11 @@ fun CoapBackendForm() {
                 OutlinedTextField(
                     readOnly = true,
                     value = selectedProtocol,
-                    onValueChange = { },
+                    onValueChange = {
+                        selectedProtocol = it
+                        coapBackend.protocol = CoapProtocol.valueOf(selectedProtocol)
+
+                    },
                     label = { Text("Protocol") },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
@@ -73,6 +79,7 @@ fun CoapBackendForm() {
                 value = hostname,
                 onValueChange = {
                     hostname = it
+                    coapBackend.hostname = hostname
                 },
                 label = { Text(text = "Backend Hostname") },
                 singleLine = true
@@ -82,6 +89,7 @@ fun CoapBackendForm() {
                 value = port,
                 onValueChange = {
                     port = it
+                    coapBackend.port = port.toInt()
                 },
                 label = { Text(text = "Backend Port") },
                 singleLine = true
@@ -100,6 +108,6 @@ fun CoapBackendForm() {
 @Composable
 fun PreviewCoapBackendForm() {
     IoTCoAPTheme {
-        CoapBackendForm()
+        CoapBackendForm(CoapBackend())
     }
 }

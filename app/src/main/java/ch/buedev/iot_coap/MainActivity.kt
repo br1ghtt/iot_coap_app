@@ -1,24 +1,23 @@
 package ch.buedev.iot_coap
 
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ch.buedev.iot_coap.ui.components.CoapBackendForm
-import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
+import androidx.navigation.navArgument
+import ch.buedev.iot_coap.datasources.CoapBackendDatasource
+import ch.buedev.iot_coap.model.CoapBackend
+import ch.buedev.iot_coap.ui.nav.CoapBackendNavType
+import ch.buedev.iot_coap.ui.pages.CoapBackendDetailPage
+import ch.buedev.iot_coap.ui.pages.CoapBackendListPage
+
+const val TAG = "MainActivity"
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
-    private val title = "Coap Backends"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -28,46 +27,29 @@ class MainActivity : ComponentActivity() {
                 startDestination = getString(R.string.route_coap_backend_list_page)
             ) {
                 composable(route = getString(R.string.route_coap_backend_list_page)) {
-                    CoapBackendListPage(title = title, navController = navController)
+                    CoapBackendListPage(
+                        coapBackends = CoapBackendDatasource.loadCoapBackends(),
+                        navController = navController
+                    )
+                }
+                composable(
+                    route = getString(R.string.route_coap_backend_detail_page) + "/{coapBackend}?isNew={isNew}",
+                    arguments = listOf(
+                        navArgument("coapBackend") {
+                            type = CoapBackendNavType()
+                        },
+                        navArgument("isNew") {
+                            defaultValue = "false"
+                        }
+                    )
+                ) {
+                    CoapBackendDetailPage(
+                        coapBackend = it.arguments?.getParcelable<CoapBackend>("coapBackend")!!,
+                        isNew = it.arguments?.getString("isNew").toBoolean(),
+                        navController = navController
+                    )
                 }
             }
         }
-    }
-
-    @ExperimentalMaterialApi
-    @Composable
-    fun CoapBackendListPage(title: String, navController: NavController) {
-        IoTCoAPTheme {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        title = {
-                            Text(text = title)
-                        }
-                    )
-                },
-                content = {
-                    CoapBackendForm()
-                },
-                floatingActionButton = {
-                    FloatingActionButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Filled.Add, contentDescription = "Add Coap Backend")
-                    }
-                }
-            )
-        }
-    }
-
-    @ExperimentalMaterialApi
-    @Preview
-    @Preview(
-        uiMode = Configuration.UI_MODE_NIGHT_YES,
-        showBackground = true,
-        name = "Dark Mode"
-    )
-    @Composable
-    fun PreviewCoapBackendListPage() {
-        val navController = rememberNavController()
-        CoapBackendListPage(title = "TopAppBar", navController = navController)
     }
 }

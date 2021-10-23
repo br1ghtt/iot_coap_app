@@ -8,18 +8,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.R
+import ch.buedev.iot_coap.TAG
 import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
-
-const val TAG = "CoapBackendListItem"
+import com.google.gson.Gson
 
 @ExperimentalMaterialApi
 @Composable
-fun CoapBackendListItem(coapBackend: CoapBackend) {
+fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) {
+    val context = LocalContext.current
     Surface {
         ListItem(
             icon = {
@@ -44,7 +48,14 @@ fun CoapBackendListItem(coapBackend: CoapBackend) {
                 Icon(
                     Icons.Filled.Edit,
                     contentDescription = "Edit Coap Backend",
-                    modifier = Modifier.clickable { Log.d(TAG, "edit clicked") }
+                    modifier = Modifier.clickable {
+                        Log.d(TAG, "edit clicked")
+                        navController.navigate(
+                            context.getString(R.string.route_coap_backend_detail_page) + "/" + Gson().toJson(
+                                coapBackend
+                            )
+                        )
+                    }
                 )
             },
             modifier = Modifier.clickable { Log.d(TAG, "item clicked") }
@@ -61,7 +72,11 @@ fun CoapBackendListItem(coapBackend: CoapBackend) {
 )
 @Composable
 fun PreviewCoapBackendListItem() {
+    val navController = rememberNavController()
     IoTCoAPTheme {
-        CoapBackendListItem(coapBackend = CoapBackendDatasource.loadCoapServerData()[0])
+        CoapBackendListItem(
+            coapBackend = CoapBackendDatasource.loadCoapBackends()[0],
+            navController = navController
+        )
     }
 }
