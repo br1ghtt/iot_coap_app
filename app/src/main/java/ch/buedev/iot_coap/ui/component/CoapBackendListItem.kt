@@ -1,4 +1,4 @@
-package ch.buedev.iot_coap.ui.components
+package ch.buedev.iot_coap.ui.component
 
 import android.content.res.Configuration
 import android.util.Log
@@ -14,11 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.R
-import ch.buedev.iot_coap.TAG
 import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
 import com.google.gson.Gson
+
+private const val TAG = "CoapBackendListItem"
 
 @ExperimentalMaterialApi
 @Composable

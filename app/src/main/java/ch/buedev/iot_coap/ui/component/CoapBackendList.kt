@@ -1,4 +1,4 @@
-package ch.buedev.iot_coap.ui.components
+package ch.buedev.iot_coap.ui.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,6 +16,7 @@ import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
 @ExperimentalMaterialApi
 @Composable
 fun CoapBackendList(coapBackends: List<CoapBackend>, navController: NavController) {
+
     LazyColumn {
         items(coapBackends) { coapBackend ->
             CoapBackendListItem(

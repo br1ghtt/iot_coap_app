@@ -1,4 +1,4 @@
-package ch.buedev.iot_coap.ui.pages
+package ch.buedev.iot_coap.ui.page
 
 import android.content.res.Configuration
 import android.util.Log
@@ -7,42 +7,51 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.R
-import ch.buedev.iot_coap.TAG
-import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
-import ch.buedev.iot_coap.ui.components.CoapBackendForm
+import ch.buedev.iot_coap.services.CoapBackendService
+import ch.buedev.iot_coap.services.impl.CoapBackendServiceDatasource
+import ch.buedev.iot_coap.ui.component.CoapBackendForm
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
+import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
+
+private const val TAG = "CoapBackendFormPage"
 
 @ExperimentalMaterialApi
 @Composable
-fun CoapBackendDetailPage(coapBackend: CoapBackend, isNew: Boolean = false, navController: NavController) {
-    val context = LocalContext.current
-    val backend by rememberSaveable { mutableStateOf(coapBackend) }
+fun CoapBackendFormPage(
+    viewModel: CoapBackendFormViewModel
+) {
+    val name by viewModel.name
+    val hostname by viewModel.hostname
+    val port by viewModel.port
+    val protocol by viewModel.protocol
+
     IoTCoAPTheme {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "Create Coap Backends")
+                        Text(text = "Create $name")
                     }
                 )
             },
             content = {
-                CoapBackendForm(backend)
+                CoapBackendForm(
+                    name, viewModel::onNameChange,
+                    hostname, viewModel::onHostnameChange,
+                    port, viewModel::onPortChange,
+                    protocol, viewModel::onProtocolChange,
+                    viewModel.getProtocols(),
+                    viewModel::onDeleteCoapBackend
+                )
             },
             floatingActionButton = {
-                FloatingActionButton(onClick = {
-                    Log.d(TAG, "Add coap backend $backend $isNew")
-                    CoapBackendDatasource.addCoapBackend(backend = backend)
-                    navController.navigate(context.getString(R.string.route_coap_backend_list_page))
-                }) {
+                FloatingActionButton(onClick = viewModel::onSaveCoapBackend) {
                     Icon(Icons.Filled.Create, contentDescription = "Add Coap Backend")
                 }
             }
@@ -60,5 +69,8 @@ fun CoapBackendDetailPage(coapBackend: CoapBackend, isNew: Boolean = false, navC
 @Composable
 fun PreviewCoapBackendCreatePage() {
     val navController = rememberNavController()
-    CoapBackendDetailPage(coapBackend = CoapBackend(), navController = navController)
+    val coapBackendService = CoapBackendServiceDatasource()
+    CoapBackendFormPage(
+        CoapBackendFormViewModel(CoapBackend(), false, coapBackendService, navController, LocalContext.current)
+    )
 }

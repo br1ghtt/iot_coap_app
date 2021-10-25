@@ -4,31 +4,46 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
+import ch.buedev.iot_coap.services.CoapBackendService
+import ch.buedev.iot_coap.services.impl.CoapBackendServiceSharedPref
 import ch.buedev.iot_coap.ui.nav.CoapBackendNavType
-import ch.buedev.iot_coap.ui.pages.CoapBackendDetailPage
-import ch.buedev.iot_coap.ui.pages.CoapBackendListPage
+import ch.buedev.iot_coap.ui.page.CoapBackendFormPage
+import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
+import ch.buedev.iot_coap.ui.page.CoapBackendListPage
 
-const val TAG = "MainActivity"
+private const val TAG = "MainActivity"
 
 @ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
+    private lateinit var _coapBackendService: CoapBackendService
+    private val coapBackendService: CoapBackendService get() = _coapBackendService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        _coapBackendService = CoapBackendServiceSharedPref(this)
         setContent {
             val navController = rememberNavController()
+            var coapBackendList by remember { mutableStateOf(listOf<CoapBackend>()) }
+
             NavHost(
                 navController = navController,
                 startDestination = getString(R.string.route_coap_backend_list_page)
             ) {
                 composable(route = getString(R.string.route_coap_backend_list_page)) {
+                    coapBackendService.load {
+                        coapBackendList = it
+                    }
                     CoapBackendListPage(
-                        coapBackends = CoapBackendDatasource.loadCoapBackends(),
+                        coapBackends = coapBackendList,
                         navController = navController
                     )
                 }
@@ -43,10 +58,14 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 ) {
-                    CoapBackendDetailPage(
-                        coapBackend = it.arguments?.getParcelable<CoapBackend>("coapBackend")!!,
-                        isNew = it.arguments?.getString("isNew").toBoolean(),
-                        navController = navController
+                    CoapBackendFormPage(
+                        viewModel = CoapBackendFormViewModel(
+                            it.arguments?.getParcelable<CoapBackend>(
+                                "coapBackend"
+                            )!!,
+                            isNew = it.arguments?.getString("isNew").toBoolean(),
+                            coapBackendService, navController, this@MainActivity
+                        ),
                     )
                 }
             }
