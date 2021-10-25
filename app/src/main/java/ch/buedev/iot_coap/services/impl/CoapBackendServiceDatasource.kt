@@ -6,6 +6,10 @@ import ch.buedev.iot_coap.services.CoapBackendService
 
 private const val TAG = "CoapBackendService"
 
+/**
+ * A CoAP Backend Service which loads a static list of objects from a datasource.
+ * @author Cédric Bühler
+ */
 class CoapBackendServiceDatasource: CoapBackendService {
     override fun save(coapBackend: CoapBackend, onSave: (coapBackend: CoapBackend) -> Unit) {
         CoapBackendDatasource.addCoapBackend(coapBackend)

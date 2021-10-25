@@ -11,6 +11,11 @@ import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.model.CoapProtocol
 import ch.buedev.iot_coap.services.CoapBackendService
 
+/**
+ * The ViewModel for the CoAP Backend form.
+ * Manages the state of the ui and provides callbacks.
+ * @author Cédric Bühler
+ */
 private const val TAG = "CoapBackendFormVM"
 
 class CoapBackendFormViewModel(

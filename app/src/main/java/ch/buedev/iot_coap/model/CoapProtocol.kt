@@ -2,6 +2,10 @@ package ch.buedev.iot_coap.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * A CoAP Protocol
+ * @author Cédric Bühler
+ */
 enum class CoapProtocol(@SerializedName("value") val value: String) {
     @SerializedName("0")
     COAP("coap"),

@@ -9,7 +9,10 @@ import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.services.CoapBackendService
 import com.google.gson.Gson
 
-
+/**
+ * A CoAP Backend Service which manges the objects int the android SharedPreferences.
+ *  @author Cédric Bühler
+ */
 private const val TAG = "CoapBackendService"
 
 class CoapBackendServiceSharedPref(private val context: Context) : CoapBackendService {
