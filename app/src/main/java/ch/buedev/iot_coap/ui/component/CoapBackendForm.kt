@@ -27,7 +27,8 @@ fun CoapBackendForm(
     port: String, onPortChange: (String) -> Unit,
     protocol: String, onProtocolChange: (String) -> Unit,
     protocols: List<String>,
-    onDeleteCoapBackend: () -> Unit
+    onDeleteCoapBackend: () -> Unit,
+    isNew: Boolean
 ) {
     var expanded by remember { mutableStateOf(false) }
     Surface {
@@ -89,11 +90,13 @@ fun CoapBackendForm(
                 singleLine = true
             )
             Spacer(modifier = Modifier.padding(top = 16.dp))
-            OutlinedButton(
-                onClick = onDeleteCoapBackend,
-                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.onError)
-            ) {
-                Text(text = "Delete")
+            if (!isNew) {
+                OutlinedButton(
+                    onClick = onDeleteCoapBackend,
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colors.onError)
+                ) {
+                    Text(text = "Delete")
+                }
             }
         }
     }
@@ -121,7 +124,8 @@ fun PreviewCoapBackendForm() {
             "coap",
             viewModel::onProtocolChange,
             viewModel.getProtocols(),
-            viewModel::onDeleteCoapBackend
+            viewModel::onDeleteCoapBackend,
+            false
         )
     }
 }

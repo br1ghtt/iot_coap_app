@@ -20,7 +20,7 @@ private const val TAG = "CoapBackendFormVM"
 
 class CoapBackendFormViewModel(
     val coapBackend: CoapBackend,
-    private val isNew: Boolean,
+    private val isNewBackend: Boolean,
     private val coapBackendService: CoapBackendService,
     private val navController: NavController,
     private val context: Context
@@ -42,6 +42,10 @@ class CoapBackendFormViewModel(
     private val _protocol = mutableStateOf(coapBackend.protocol.value)
     val protocol: MutableState<String>
         get() = _protocol
+
+    private val _isNew = mutableStateOf(isNewBackend)
+    val isNew: MutableState<Boolean>
+        get() = _isNew
 
     fun onNameChange(newName: String) {
         _name.value = newName
@@ -69,8 +73,8 @@ class CoapBackendFormViewModel(
     }
 
     fun onDeleteCoapBackend() {
-        if (!isNew) {
-            Log.d(TAG, "delete backend $coapBackend $isNew")
+        if (!_isNew.value) {
+            Log.d(TAG, "Delete $coapBackend")
             coapBackendService.delete(coapBackend) {
                 if (it) {
                     navController.navigate(
@@ -84,7 +88,7 @@ class CoapBackendFormViewModel(
     }
 
     fun onSaveCoapBackend()  {
-        Log.d(TAG, "Add coap backend $coapBackend")
+        Log.d(TAG, "Save $coapBackend")
         coapBackendService.save(coapBackend) {
             navController.navigate(context.getString(R.string.route_coap_backend_list_page))
         }

@@ -17,8 +17,8 @@ import ch.buedev.iot_coap.services.CoapBackendService
 import ch.buedev.iot_coap.services.impl.CoapBackendServiceSharedPref
 import ch.buedev.iot_coap.ui.nav.CoapBackendNavType
 import ch.buedev.iot_coap.ui.page.CoapBackendFormPage
-import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
 import ch.buedev.iot_coap.ui.page.CoapBackendListPage
+import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
 
 private const val TAG = "MainActivity"
 
@@ -59,11 +59,11 @@ class MainActivity : ComponentActivity() {
                     )
                 ) {
                     CoapBackendFormPage(
-                        viewModel = CoapBackendFormViewModel(
+                        CoapBackendFormViewModel(
                             it.arguments?.getParcelable<CoapBackend>(
                                 "coapBackend"
                             )!!,
-                            isNew = it.arguments?.getString("isNew").toBoolean(),
+                            it.arguments?.getString("isNew").toBoolean(),
                             coapBackendService, navController, this@MainActivity
                         ),
                     )

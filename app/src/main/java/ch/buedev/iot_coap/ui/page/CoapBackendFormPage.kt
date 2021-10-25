@@ -1,7 +1,6 @@
 package ch.buedev.iot_coap.ui.page
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
@@ -9,11 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import ch.buedev.iot_coap.R
 import ch.buedev.iot_coap.model.CoapBackend
-import ch.buedev.iot_coap.services.CoapBackendService
 import ch.buedev.iot_coap.services.impl.CoapBackendServiceDatasource
 import ch.buedev.iot_coap.ui.component.CoapBackendForm
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
@@ -30,6 +26,7 @@ fun CoapBackendFormPage(
     val hostname by viewModel.hostname
     val port by viewModel.port
     val protocol by viewModel.protocol
+    val isNewBackend by viewModel.isNew
 
     IoTCoAPTheme {
         Scaffold(
@@ -47,7 +44,9 @@ fun CoapBackendFormPage(
                     port, viewModel::onPortChange,
                     protocol, viewModel::onProtocolChange,
                     viewModel.getProtocols(),
-                    viewModel::onDeleteCoapBackend
+                    viewModel::onDeleteCoapBackend,
+                    isNewBackend
+
                 )
             },
             floatingActionButton = {
