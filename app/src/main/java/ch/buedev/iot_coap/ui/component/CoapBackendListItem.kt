@@ -39,7 +39,7 @@ fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) 
             },
             overlineText = {
                 Text(
-                    text = coapBackend.name,
+                    text = coapBackend.name + coapBackend.id,
                 )
             },
             secondaryText = {

@@ -8,6 +8,8 @@ import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.services.CoapBackendService
 import com.google.gson.Gson
+import kotlinx.coroutines.awaitAll
+import java.util.*
 
 /**
  * A CoAP Backend Service which manges the objects int the android SharedPreferences.
@@ -30,6 +32,9 @@ class CoapBackendServiceSharedPref(private val context: Context) : CoapBackendSe
 
     override fun save(coapBackend: CoapBackend, onSave: (coapBackend: CoapBackend) -> Unit) {
         Log.d(TAG, "save coap backend $coapBackend")
+        if (!coapBackend.hasId()) {
+            coapBackend.id = UUID.randomUUID().toString()
+        }
         with(sharedPref.edit()) {
             putString(
                 buildKey(coapBackend), Gson().toJson(coapBackend)
@@ -63,9 +68,9 @@ class CoapBackendServiceSharedPref(private val context: Context) : CoapBackendSe
     }
 
     private fun buildKey(coapBackend: CoapBackend): String {
-       return  context.getString(
+       return context.getString(
            R.string.shared_preferences_coap_backends_key,
-           coapBackend.hashCode()
+           coapBackend.id
        )
     }
 

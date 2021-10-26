@@ -112,7 +112,7 @@ fun CoapBackendForm(
 @Composable
 fun PreviewCoapBackendForm() {
     val viewModel = CoapBackendFormViewModel(
-        CoapBackend(), true, CoapBackendServiceDatasource(), rememberNavController(), LocalContext.current)
+        CoapBackend(), CoapBackendServiceDatasource(), rememberNavController(), LocalContext.current)
     IoTCoAPTheme {
         CoapBackendForm(
             "The Name",

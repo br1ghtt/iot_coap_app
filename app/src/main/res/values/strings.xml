@@ -5,5 +5,5 @@
     <string name="route_coap_backend_detail_page">coapBackendDetail</string>
 
     <string name="shared_preferences_coap_backends">sharedPreferencesCoapBackends</string>
-    <string name="shared_preferences_coap_backends_key">sharedPreferencesCoapBackend_%d</string>
+    <string name="shared_preferences_coap_backends_key">sharedPreferencesCoapBackend_%s</string>
 </resources>

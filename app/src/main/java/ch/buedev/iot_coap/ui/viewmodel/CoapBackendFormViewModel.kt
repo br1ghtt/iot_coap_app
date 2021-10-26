@@ -20,7 +20,6 @@ private const val TAG = "CoapBackendFormVM"
 
 class CoapBackendFormViewModel(
     val coapBackend: CoapBackend,
-    private val isNewBackend: Boolean,
     private val coapBackendService: CoapBackendService,
     private val navController: NavController,
     private val context: Context
@@ -43,7 +42,7 @@ class CoapBackendFormViewModel(
     val protocol: MutableState<String>
         get() = _protocol
 
-    private val _isNew = mutableStateOf(isNewBackend)
+    private val _isNew = mutableStateOf(!coapBackend.hasId())
     val isNew: MutableState<Boolean>
         get() = _isNew
 

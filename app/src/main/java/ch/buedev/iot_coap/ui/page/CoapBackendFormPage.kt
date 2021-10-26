@@ -70,6 +70,6 @@ fun PreviewCoapBackendCreatePage() {
     val navController = rememberNavController()
     val coapBackendService = CoapBackendServiceDatasource()
     CoapBackendFormPage(
-        CoapBackendFormViewModel(CoapBackend(), false, coapBackendService, navController, LocalContext.current)
+        CoapBackendFormViewModel(CoapBackend(), coapBackendService, navController, LocalContext.current)
     )
 }

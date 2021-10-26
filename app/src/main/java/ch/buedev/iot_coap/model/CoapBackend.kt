@@ -9,11 +9,16 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class CoapBackend(
+    var id: String = "",
     var name: String = "Coap Backend Name",
     var protocol: CoapProtocol = CoapProtocol.COAP,
     var hostname: String = "coap.me",
     var port: Int = 5683
 ) : Parcelable {
+
+    fun hasId(): Boolean {
+        return id.isNotEmpty()
+    }
 
     /**
      * Builds the CoAP hostname protocoll://hostname:port.

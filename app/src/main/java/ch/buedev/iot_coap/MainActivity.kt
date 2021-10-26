@@ -48,13 +48,10 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable(
-                    route = getString(R.string.route_coap_backend_detail_page) + "/{coapBackend}?isNew={isNew}",
+                    route = getString(R.string.route_coap_backend_detail_page) + "/{coapBackend}",
                     arguments = listOf(
                         navArgument("coapBackend") {
                             type = CoapBackendNavType()
-                        },
-                        navArgument("isNew") {
-                            defaultValue = "false"
                         }
                     )
                 ) {
@@ -63,7 +60,6 @@ class MainActivity : ComponentActivity() {
                             it.arguments?.getParcelable<CoapBackend>(
                                 "coapBackend"
                             )!!,
-                            it.arguments?.getString("isNew").toBoolean(),
                             coapBackendService, navController, this@MainActivity
                         ),
                     )
