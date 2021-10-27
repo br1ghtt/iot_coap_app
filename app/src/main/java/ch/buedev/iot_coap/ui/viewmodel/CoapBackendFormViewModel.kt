@@ -37,7 +37,6 @@ class CoapBackendFormViewModel(
     val port: MutableState<String>
         get() = _port
 
-
     private val _protocol = mutableStateOf(coapBackend.protocol.value)
     val protocol: MutableState<String>
         get() = _protocol

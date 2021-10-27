@@ -8,29 +8,25 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.R
 import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
-import com.google.gson.Gson
 
 private const val TAG = "CoapBackendListItem"
 
 @ExperimentalMaterialApi
 @Composable
-fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) {
-    val context = LocalContext.current
+fun CoapBackendListItem(coapBackend: CoapBackend, onEditClick: (CoapBackend) -> Unit) {
     Surface {
         ListItem(
             icon = {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_dns),
-                    contentDescription = "Coap Backend List Item " + coapBackend.name,
+                    contentDescription = "Coap Backend List Item ${coapBackend.name}",
                     tint = MaterialTheme.colors.primaryVariant
                 )
             },
@@ -39,7 +35,7 @@ fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) 
             },
             overlineText = {
                 Text(
-                    text = coapBackend.name + coapBackend.id,
+                    text = coapBackend.name,
                 )
             },
             secondaryText = {
@@ -50,12 +46,7 @@ fun CoapBackendListItem(coapBackend: CoapBackend, navController: NavController) 
                     Icons.Filled.Edit,
                     contentDescription = "Edit Coap Backend",
                     modifier = Modifier.clickable {
-                        Log.d(TAG, "edit clicked")
-                        navController.navigate(
-                            context.getString(R.string.route_coap_backend_detail_page) + "/" + Gson().toJson(
-                                coapBackend
-                            )
-                        )
+                        onEditClick(coapBackend)
                     }
                 )
             },
@@ -77,7 +68,7 @@ fun PreviewCoapBackendListItem() {
     IoTCoAPTheme {
         CoapBackendListItem(
             coapBackend = CoapBackendDatasource.loadCoapBackends()[0],
-            navController = navController
+            {}
         )
     }
 }

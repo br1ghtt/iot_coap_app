@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import ch.buedev.iot_coap.R
-import ch.buedev.iot_coap.datasources.CoapBackendDatasource
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.services.CoapBackendService
 import com.google.gson.Gson
-import kotlinx.coroutines.awaitAll
 import java.util.*
 
 /**

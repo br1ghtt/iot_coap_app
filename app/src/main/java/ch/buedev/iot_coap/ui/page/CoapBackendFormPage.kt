@@ -15,8 +15,6 @@ import ch.buedev.iot_coap.ui.component.CoapBackendForm
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
 import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
 
-private const val TAG = "CoapBackendFormPage"
-
 @ExperimentalMaterialApi
 @Composable
 fun CoapBackendFormPage(

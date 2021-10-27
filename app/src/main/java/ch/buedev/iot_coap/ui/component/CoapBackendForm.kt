@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import ch.buedev.iot_coap.model.CoapBackend
 import ch.buedev.iot_coap.services.impl.CoapBackendServiceDatasource
-import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
 import ch.buedev.iot_coap.ui.theme.IoTCoAPTheme
+import ch.buedev.iot_coap.ui.viewmodel.CoapBackendFormViewModel
 
 private const val TAG = "CoapBackendForm"
 
@@ -36,7 +36,7 @@ fun CoapBackendForm(
             OutlinedTextField(
                 value = name,
                 onValueChange = onNameChange,
-                label = { Text(text = "Coap Backend Name") },
+                label = { Text(text = "Backend Name") },
                 singleLine = true,
             )
             Spacer(modifier = Modifier.padding(top = 8.dp))
